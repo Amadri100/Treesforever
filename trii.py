@@ -33,19 +33,18 @@ def draw_grid(positions):
 
 
 def ad_grid(positions):
-    new_pos = set()
-    for position in positions:
-        new_pos.add(position)
-        x, y = position
-        print(y - 1 >= 0)
-        print((x,y-1) not in positions)
-        if y - 1 >= 0 and (x, y-1) not in position:
-            #if (x, y - 1)  not in position:
+    new_pos = set(positions)  # Start with existing positions
+
+    for x, y in positions:
+        # adds cell up
+        if y - 1 >= 0 and (x, y - 1) not in positions:
             new_pos.add((x, y - 1))
-        elif y + 1 <= grid_h:
-            if (x, y + 1)  not in positions:
-                new_pos.add((x, y + 1))
-        print(new_pos)
+            #break
+
+        #Adds new cell down
+        elif y + 1 < grid_h and (x, y + 1) not in positions:
+            new_pos.add((x, y + 1))
+            break 
     return new_pos
     
 def main():
