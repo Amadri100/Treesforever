@@ -3,7 +3,7 @@ import pygame
 pygame.init()
 
 #Variable definitions
-F = [False, True]
+TYF = [False, True]
 black = (0,0,0)
 white = (255,255,255)
 yellow = (255,255,0)
@@ -20,12 +20,13 @@ clock = pygame.time.Clock()
 
 def draw_grid(positions):
     "This function draws the grid"
+    
     for post in positions:
         col, row = post
         topLeft = (col * til_size, row * til_size)
         pygame.draw.rect(screen, white, (*topLeft, til_size, til_size))
 
-    for row in range(grid_h): # Added an extra just in case.
+    for row in range(grid_h): 
         pygame.draw.line(screen, black, (width, row * til_size), (0, row * til_size))
 
     for col in range(grid_w):
@@ -43,15 +44,17 @@ def ad_grid(positions):
         #Adds new cell down
         if y + 1 < grid_h and (x, y + 1) not in positions:
             new_pos.add((x, y + 1))
+            
         for dx in [-1, 1]:
             for dy in [0, 1]:
-                a = random.randint(0,1)
-                f = F[a]
+                # grows cell horizontally, and diagonally up
+                ran = random.randint(0,1)
+                check = TYF[ran]
                 nPos = (x +dx, y+dy)
-                if f:
+                if check:
                     if nPos not in positions:
                         new_pos.add(nPos)
-                        break
+                        
     return new_pos
 
 
@@ -80,10 +83,12 @@ def main():
         pygame.display.set_caption('Playing' if playing else "paused")
         
         for event in pygame.event.get():
-            if event.type == pygame.QUIT: # Happens when the player quits the game
+            if event.type == pygame.QUIT: 
+                # Happens when the player quits the game
                 running = False
                 
-            if event.type == pygame.MOUSEBUTTONDOWN:#Takes the position and make the cube
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                #Takes the position and make the cube
                 x, y = pygame.mouse.get_pos()
                 col = x // til_size
                 row = y // til_size
@@ -93,7 +98,8 @@ def main():
                     posts.remove(pos)
                 else:
                     posts.add(pos)
-            if event.type == pygame.KEYDOWN: # when pressing space it pauses or plays the simulation.
+            if event.type == pygame.KEYDOWN: 
+                # when pressing space it pauses or plays the simulation.
                 if event.key == pygame.K_SPACE:
                     playing = not playing
             
