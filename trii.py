@@ -3,7 +3,7 @@ import pygame
 pygame.init()
 
 #Variable definitions
-
+F = [False, True]
 black = (0,0,0)
 white = (255,255,255)
 yellow = (255,255,0)
@@ -39,14 +39,23 @@ def ad_grid(positions):
         # adds cell up
         if y - 1 >= 0 and (x, y - 1) not in positions:
             new_pos.add((x, y - 1))
-            #break
-
+                
         #Adds new cell down
-        elif y + 1 < grid_h and (x, y + 1) not in positions:
+        if y + 1 < grid_h and (x, y + 1) not in positions:
             new_pos.add((x, y + 1))
-            break 
+        for dx in [-1, 1]:
+            for dy in [0, 1]:
+                a = random.randint(0,1)
+                f = F[a]
+                nPos = (x +dx, y+dy)
+                if f:
+                    if nPos not in positions:
+                        new_pos.add(nPos)
+                        break
     return new_pos
-    
+
+
+
 def main():
     "This function run the simulation"
     
