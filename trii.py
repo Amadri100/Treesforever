@@ -34,7 +34,9 @@ def draw_grid(positions):
 
 
 def ad_grid(positions):
-    new_pos = set(positions)  # Start with existing positions
+    'Adds cells to the simulation vertically, horizontally and diagonally upwards'
+   
+    new_pos = set(positions)  
 
     for x, y in positions:
         # adds cell up
