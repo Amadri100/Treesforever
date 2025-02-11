@@ -61,7 +61,7 @@ def ad_grid(positions):
 
 
 
-def main():
+def run():
     "This function run the simulation"
     
     count = 0
@@ -109,4 +109,4 @@ def main():
         draw_grid(posts)
         pygame.display.update()
     pygame.quit()
-main()
+run()

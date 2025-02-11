@@ -11,7 +11,6 @@ width, height = 700, 600
 til_size = 20
 grid_h = height // til_size
 grid_w = width  // til_size
-print(grid_h)
 
 FPS = 60
 
@@ -39,27 +38,11 @@ def ad_grid(positions, finish_state):
     new_pos = set(positions)  
     for pos in positions:
         x,y = pos
-        if finish_state:
-            # adds cell up
-            if y - 1 >= 0 and (x, y - 1) not in positions:
-                new_pos.add((x, y - 1))
-            #Adds new cell down
-            if y + 1 < grid_h and (x, y + 1) not in positions:
-                print(y)
-                new_pos.add((x, y + 1))
-            else:
-                finish_state = False
-                print(finish_state)
-        if finish_state == False:
-            for dx in [-1, 1]:
-                for dy in [0, - 1]:
-                    # grows cell horizontally, and diagonally up
-                    ran = random.randint(0,1)
-                    check = TYF[ran]
-                    nPos = (x +dx, y+dy)
-                    if check:
-                        if nPos not in positions:
-                            new_pos.add(nPos)
+        dx = [-1, 1][random.randint(0, 1)]
+        dy = random.randint(-1, 0)
+        nPos = (x +dx, y+dy)
+        if nPos not in positions:
+                new_pos.add(nPos)
                             
     return new_pos, finish_state
 
