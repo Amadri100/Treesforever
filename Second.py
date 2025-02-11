@@ -5,7 +5,7 @@ pygame.init()
 #Variable definitions
 TYF = [False, True]
 bBlack = (0,0,22) #blueblack
-lred = (245, 230, 230) #light red
+lred = (255, 160, 143) #light red
 blue_grey = (128, 128,150)
 width, height = 700, 600
 til_size = 20
@@ -71,7 +71,7 @@ def run():
     count = 0
     running = True
     playing = False
-    up_frecuency = 40
+    up_frecuency = 80
     finish_state = True
     #posts are the squares
     posts = set()
