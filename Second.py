@@ -22,38 +22,49 @@ clock = pygame.time.Clock()
 class cells:
     """ Manage cells. Type is a boolean value
     that determines they way each cell grows.
+    Rules: 1. Not 2 types of cells in the same cell.
+    2. type 0 cells grow vertically and type 1 vertically 
+    upwards and backwards.
     """
     def __init__(self, type):
         self.type = type
-    def ad_grid(positions):
+    def ad_grid(self):
         'Adds cells to the simulation vertically, horizontally and diagonally upwards'
-        new_pos = set(positions)  
-        for pos in positions:
-            x,y = pos
-            # adds cell up
-            if y - 1 >= 0 and (x, y - 1) not in positions:
-                new_pos.add((x, y - 1))
-            #Adds new cell down
-            if y + 1 < grid_h and (x, y + 1) not in positions:
-                print(y)
-                new_pos.add((x, y + 1))
-            for dx in [-1, 1]:
-                for dy in [0, - 1]:
-                    # grows cell horizontally, and diagonally up
-                    ran = random.randint(0,1)
-                    check = TYF[ran]
-                    nPos = (x +dx, y+dy)
-                    if check:
-                        if nPos not in positions:
-                            new_pos.add(nPos)
-                                
-        return new_pos
+        #Avoid changing the self.position since it causes a runtime error
+        new_pos = set()
+        match self.type:
+            case 0:
+                for pos in self.position:
+                    x, y = pos
+                    # adds cell up
+                    if y - 1 >= 0 and (x, y - 1) not in self.position:
+                        new_pos.add((x, y - 1))
+                    #Adds new cell down
+                    if y + 1 < grid_h and (x, y + 1) not in self.position:
+                        new_pos.add((x, y + 1))
+            case 1:
+                for pos in self.position:
+                    x, y = pos
+                    for dx in [-1, 1]:
+                        for dy in [0, - 1]:
+                            # grows cell horizontally, and diagonally up
+                            ran = random.randint(0,1)
+                            check = TYF[ran]
+                            nPos = (x +dx, y+dy)
+                            if check:
+                                if nPos not in self.position and nPos not in new_pos:
+                                    new_pos.add(nPos)
+        for x in new_pos: #Use a for loop to make it hashable  
+            self.position.add(x)    
+        return None
     #Variables
     position = set()
     
-def draw_grid(positions):
+def draw_grid(positions, position2):
     "This function draws the grid"
-    
+    for post in position2:
+        col, row = post
+        pygame.draw.rect(screen, lgreen,(*(col*til_size,row*til_size), til_size, til_size))
     for post in positions:
         col, row = post
         topLeft = (col * til_size, row * til_size)
@@ -64,7 +75,21 @@ def draw_grid(positions):
 
     for col in range(grid_w):
         pygame.draw.line(screen, bBlack, (col * til_size, 0), (col * til_size, height))
-
+def addleaves(positions):
+    # adds leaves
+    newleaves = set()
+    for pos in positions:
+        x, y = pos 
+        d = x +1
+        while d in positions:
+            d += 1
+        newleaves.add((d, y)) 
+        d = x -1
+        while d in positions:
+            d -= 1
+        newleaves.add((d, y))
+    return newleaves
+        
 def run():
     "This function run the simulation"
     #Vars
@@ -72,6 +97,7 @@ def run():
     running = True
     playing = False
     up_frecuency = 80
+    leavespawn = 0
     #class objects
     trunk = cells(0)
     leaves = cells(1)
@@ -84,11 +110,16 @@ def run():
             
             count += 1
         
-        if count >= up_frecuency:
+        if count >= up_frecuency: #controls update time
             count = 0
-            trunk.position =  cells.ad_grid(trunk.position)
+            trunk.ad_grid()
+            leaves.ad_grid()
             print(trunk.position)
-        
+            print("--------------")
+            print(leaves.position)
+            if len(trunk.position) > 0 and leavespawn == 0:
+                leaves.position = addleaves(trunk.position)
+                leavespawn = 1
         pygame.display.set_caption('Playing' if playing else "paused")
         
         for event in pygame.event.get():
@@ -113,7 +144,7 @@ def run():
                     playing = not playing
                
         screen.fill(blue_grey)
-        draw_grid(trunk.position)
+        draw_grid(trunk.position, leaves.position)
         pygame.display.update()
     pygame.quit()
 run()

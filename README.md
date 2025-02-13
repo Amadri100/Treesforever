@@ -13,3 +13,7 @@
 First attempt to simulate the grown of a tree.
 ### extra1
 Test without vertical growth
+### second
+**Now Each cell in either leaves or trunk**
+- Added green leaves.
+## DOCS
