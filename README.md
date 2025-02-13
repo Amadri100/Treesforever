@@ -52,6 +52,9 @@ col is width row height
 **add_Leaves**🍃
 - add leaves at the start of the game on the first trunk added
 also freezes the leaves grow so in the first update leaves do not grow *twice*
+**not_repeat**
+- Avoids trunk positions & and leaves positions to colide
+Trunks has priority 
 ### Run function
 **Main Function**
 - This function has the game loop.

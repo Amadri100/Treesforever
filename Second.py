@@ -90,6 +90,15 @@ def add_leaves(positions):
         newleaves.add((d, y))
         
     return newleaves
+def not_repeat(set1, set2):
+    set1new = set()
+    set2new = set()
+    for x in set1:
+        set1new.add(x)
+    for x in set2:
+        if x not in set1:
+            set2new.add(x)
+    return set1new, set2new
         
 def run():
     "This function run the simulation"
@@ -121,6 +130,7 @@ def run():
             trunk.ad_grid()
             if leavespwanable == 1:
                 leaves.ad_grid()
+                trunk.position, leaves.position = not_repeat(trunk.position, leaves.position)
             print(trunk.position)
             print("--------------")
             print(leaves.position)
