@@ -12,7 +12,6 @@ width, height = 700, 600
 til_size = 20
 grid_h = height // til_size
 grid_w = width  // til_size
-print(grid_h)
 
 FPS = 60
 
@@ -29,7 +28,7 @@ class cells:
     def __init__(self, type):
         self.type = type
     def ad_grid(self):
-        'Adds cells to the simulation vertically, horizontally and diagonally upwards'
+        'Adds cells to the simulation vertically, horizontally and diagonally depending of the type.'
         #Avoid changing the self.position since it causes a runtime error
         new_pos = set()
         match self.type:
@@ -46,7 +45,7 @@ class cells:
                 for pos in self.position:
                     x, y = pos
                     for dx in [-1, 1]:
-                        for dy in [0, - 1]:
+                        for dy in [1, 0, - 1]:
                             # grows cell horizontally, and diagonally up
                             ran = random.randint(0,1)
                             check = TYF[ran]
@@ -65,6 +64,7 @@ def draw_grid(positions, position2):
     for post in position2:
         col, row = post
         pygame.draw.rect(screen, lgreen,(*(col*til_size,row*til_size), til_size, til_size))
+        
     for post in positions:
         col, row = post
         topLeft = (col * til_size, row * til_size)
@@ -88,6 +88,7 @@ def addleaves(positions):
         while d in positions:
             d -= 1
         newleaves.add((d, y))
+        
     return newleaves
         
 def run():
@@ -96,7 +97,7 @@ def run():
     count = 0
     running = True
     playing = False
-    up_frecuency = 80
+    up_frecuency = 32
     leavespawn = 0
     #class objects
     trunk = cells(0)
@@ -118,8 +119,8 @@ def run():
             print("--------------")
             print(leaves.position)
             if len(trunk.position) > 0 and leavespawn == 0:
-                leaves.position = addleaves(trunk.position)
-                leavespawn = 1
+               leaves.position = addleaves(trunk.position)
+               leavespawn = 1
         pygame.display.set_caption('Playing' if playing else "paused")
         
         for event in pygame.event.get():
