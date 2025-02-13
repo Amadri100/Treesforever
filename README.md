@@ -63,9 +63,11 @@ if playing is false game pauses
 calls two cells objects:
 -trunk type0
 -leaves type1
+
 **count**
 While the game is playing count goes up by 1 when it reaches the update frequency it updates the game.
 first checks if add_leaves was used before and then it updates the trunk and leaves.
+
 **Events**
 Mouse: 
 1. Button 0 is left click
