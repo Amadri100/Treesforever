@@ -75,7 +75,7 @@ def draw_grid(positions, position2):
 
     for col in range(grid_w):
         pygame.draw.line(screen, bBlack, (col * til_size, 0), (col * til_size, height))
-def addleaves(positions):
+def add_leaves(positions):
     # adds leaves
     newleaves = set()
     for pos in positions:
@@ -113,14 +113,18 @@ def run():
         
         if count >= up_frecuency: #controls update time
             if len(trunk.position) > 0 and leavespawn == 0:
-               leaves.position = addleaves(trunk.position)
+               #Add leaves at the start on the first
+               leaves.position = add_leaves(trunk.position)
                leavespawn = 1
+               leavespwanable = 0 # makes sure leaves don't spawn twice on an update
             count = 0
             trunk.ad_grid()
-            leaves.ad_grid()
+            if leavespwanable == 1:
+                leaves.ad_grid()
             print(trunk.position)
             print("--------------")
             print(leaves.position)
+            leavespwanable = 1
             
         pygame.display.set_caption('Playing' if playing else "paused")
         
@@ -136,15 +140,27 @@ def run():
                 row = y // til_size
                 pos = (col, row)
 
-                if pos in trunk.position:
-                    trunk.position.remove(pos)
-                else:
-                    trunk.position.add(pos)
+                if pygame.mouse.get_pressed()[0]:
+                    if pos in trunk.position:
+                        trunk.position.remove(pos)
+                    else:
+                        trunk.position.add(pos)
+                if pygame.mouse.get_pressed()[2]:
+                    if pos in leaves.position:
+                        leaves.position.remove(pos)
+                    else:
+                        leaves.position.add(pos)
+                    
             if event.type == pygame.KEYDOWN: 
                 # when pressing space it pauses or plays the simulation.
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_SPACE: 
                     playing = not playing
-               
+                if event.key == pygame.K_c:
+                    print("Game cleaned\n")
+                    trunk.position, leaves.position = set(), set()
+                    leavespawn = 0
+                    count = 0
+                    playing = False
         screen.fill(blue_grey)
         draw_grid(trunk.position, leaves.position)
         pygame.display.update()
