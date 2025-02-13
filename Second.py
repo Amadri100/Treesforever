@@ -112,15 +112,16 @@ def run():
             count += 1
         
         if count >= up_frecuency: #controls update time
+            if len(trunk.position) > 0 and leavespawn == 0:
+               leaves.position = addleaves(trunk.position)
+               leavespawn = 1
             count = 0
             trunk.ad_grid()
             leaves.ad_grid()
             print(trunk.position)
             print("--------------")
             print(leaves.position)
-            if len(trunk.position) > 0 and leavespawn == 0:
-               leaves.position = addleaves(trunk.position)
-               leavespawn = 1
+            
         pygame.display.set_caption('Playing' if playing else "paused")
         
         for event in pygame.event.get():
