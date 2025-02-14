@@ -17,6 +17,9 @@ Test without vertical growth
 ### second
 **Now Each cell in either leaves or trunk**
 - Added green leaves.
+### third
+Final version for the moment...
+Added seeds that follow different patterns to generate trunks.
 ## DOCS 📓
 ### Variables ✖️
 **This is a list of most important variables**
@@ -65,6 +68,7 @@ Trunks has priority
 
 **seedgen**
 Has a variety of randomly selected cases for the seed to appear trunks.
+
 ### Run function
 **Main Function**
 - This function has the game loop.
