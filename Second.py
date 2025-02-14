@@ -7,6 +7,7 @@ TYF = [False, True]
 bBlack = (0,0,22) #blueblack
 lred = (255, 160, 143) #light red
 lgreen = (192,255,211) #light green
+lbrown = (196, 164, 132) #light brown
 blue_grey = (128, 128,150)
 width, height = 700, 600
 til_size = 20
@@ -22,8 +23,8 @@ class cells:
     """ Manage cells. Type is a boolean value
     that determines they way each cell grows.
     Rules: 1. Not 2 types of cells in the same cell.
-    2. type 0 cells grow vertically and type 1 vertically 
-    upwards and backwards.
+    2. type 0 cells grow vertically and type 1 vertically
+    upwards and backwards. Type 2 creates 1 - 3 type 0 cells.
     """
     def __init__(self, type):
         self.type = type
@@ -53,6 +54,8 @@ class cells:
                             if check:
                                 if nPos not in self.position and nPos not in new_pos:
                                     new_pos.add(nPos)
+            case 2:
+                pass
         for x in new_pos: #Use a for loop to make it hashable  
             self.position.add(x)    
         return None
@@ -99,7 +102,12 @@ def not_repeat(set1, set2):
         if x not in set1:
             set2new.add(x)
     return set1new, set2new
-        
+def getpos():
+    x, y = pygame.mouse.get_pos()
+    col = x // til_size
+    row = y // til_size
+    pos = (col, row)
+    return pos
 def run():
     "This function run the simulation"
     #Vars
@@ -108,9 +116,13 @@ def run():
     playing = False
     up_frecuency = 32
     leavespawn = 0
+    leavespwanable = 0 
     #class objects
     trunk = cells(0)
     leaves = cells(1)
+    trunk.position, leaves.position = set(), set() #Solves issue related to both trunk and leaves being placed at same time.
+    seed = cells(2) 
+    mouse_button = pygame.mouse.get_pressed()
     #position are the cells that are displayed
     
     while running:
@@ -119,8 +131,9 @@ def run():
         if playing == True:
             
             count += 1
-        
+             
         if count >= up_frecuency: #controls update time
+            
             if len(trunk.position) > 0 and leavespawn == 0:
                #Add leaves at the start on the first
                leaves.position = add_leaves(trunk.position)
@@ -138,35 +151,32 @@ def run():
             
         pygame.display.set_caption('Playing' if playing else "paused")
         
+        #Mouse actions
+
+     
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT: 
                 # Happens when the player quits the game
                 running = False
-                
             if event.type == pygame.MOUSEBUTTONDOWN:
-                #Takes the position and make the cube
-                x, y = pygame.mouse.get_pos()
-                col = x // til_size
-                row = y // til_size
-                pos = (col, row)
-
-                if pygame.mouse.get_pressed()[0]:
+                pos = getpos()
+                if event.button == 1:
                     if pos in trunk.position:
                         trunk.position.remove(pos)
                     else:
                         trunk.position.add(pos)
-                if pygame.mouse.get_pressed()[2]:
+                if event.button == 3:
                     if pos in leaves.position:
                         leaves.position.remove(pos)
                     else:
                         leaves.position.add(pos)
-                    
             if event.type == pygame.KEYDOWN: 
-                # when pressing space it pauses or plays the simulation.
+            # when pressing space it pauses or plays the simulation.
                 if event.key == pygame.K_SPACE: 
                     playing = not playing
                 if event.key == pygame.K_c:
-                    print("Game cleaned\n")
+                    print("Game cleaned!!!!\n")
                     trunk.position, leaves.position = set(), set()
                     leavespawn = 0
                     count = 0

@@ -45,17 +45,23 @@ Using a match statement to know what type the cells is and determine how it will
 *TYF* is a variable used for randomizing the generation of leaves.
 For loop in the end is used to add the new position on the self.position variable.
 ### Functions
+
 **draw_grid**
 takes two positions 
 runs first position2 that are the leaves
 then the trunk and the grid.
 col is width row height
+
 **add_Leaves**🍃
 - add leaves at the start of the game on the first trunk added
 also freezes the leaves grow so in the first update leaves do not grow *twice*
+
 **not_repeat**
 - Avoids trunk positions & and leaves positions to colide
 Trunks has priority 
+
+**getpos**
+- Gets mouse position.
 ### Run function
 **Main Function**
 - This function has the game loop.
@@ -74,7 +80,7 @@ Mouse:
 1. Button 0 is left click
 2. then button 2 is right click and 1 the middle click
 3. button 0 creates or destroy a trunk 
-4. button 2 creates or destroys leaves only after running the simulation once
+4. button 2 creates or destroys leaves
 Keyboard: 
 1. Space to pause.
 2. c to clean the grid, pause the game and reset the leavespawn variable.
