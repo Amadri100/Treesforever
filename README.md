@@ -62,6 +62,9 @@ Trunks has priority
 
 **getpos**
 - Gets mouse position.
+
+**seedgen**
+Has a variety of randomly selected cases for the seed to appear trunks.
 ### Run function
 **Main Function**
 - This function has the game loop.
@@ -78,10 +81,12 @@ first checks if add_leaves was used before and then it updates the trunk and lea
 **Events**
 Mouse: 
 **NOTE:** If another object is added its position must be set to set() again on the run function to avoid any potential issue.
-1. Button 0 is left click
-2. then button 2 is right click and 1 the middle click
-3. button 0 creates or destroy a trunk 
-4. button 2 creates or destroys leaves
+1. Button 1 is left click
+2. then button 3 is right click and 2 the middle click
+3. button 1 creates or destroy a trunk 
+4. button 2 creates or destroys seeds
+5. button 3 creates or destroys leaves
+
 Keyboard: 
 1. Space to pause.
 2. c to clean the grid, pause the game and reset the leavespawn variable.
