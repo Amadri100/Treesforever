@@ -1,12 +1,13 @@
 # Tree simulator 🌳
 ## Summary
-1. Tree growing simulation on pygame. Last version as for February 2025.
+1. Tree growing simulation on pygama(Last version as for February 2025).
 2. grid based system.
 3. Multiple versions...
+4. Color test file to test colors in screen.
 ## General ✨✨
 ### run function that runs the code ;p.
 - space to pause & play.
-- click to appear a 'cell'
+- left click - trunk middle click - seeds right click leaves.
 - count system to slow down the game
 ## Versions 🖳
 ### First
