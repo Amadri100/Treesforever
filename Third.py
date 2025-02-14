@@ -148,7 +148,7 @@ def run():
     count = 0
     running = True
     playing = False
-    up_frecuency = 32
+    up_frecuency = 40
     leavespawn = 0
     leavespwanable = 0 
     #class objects
