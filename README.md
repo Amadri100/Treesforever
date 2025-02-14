@@ -77,6 +77,7 @@ first checks if add_leaves was used before and then it updates the trunk and lea
 
 **Events**
 Mouse: 
+**NOTE:** If another object is added its position must be set to set() again on the run function to avoid any potential issue.
 1. Button 0 is left click
 2. then button 2 is right click and 1 the middle click
 3. button 0 creates or destroy a trunk 
