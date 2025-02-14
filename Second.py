@@ -7,7 +7,7 @@ TYF = [False, True]
 bBlack = (0,0,22) #blueblack
 lred = (255, 160, 143) #light red
 lgreen = (192,255,211) #light green
-lbrown = (196, 164, 132) #light brown
+lbrown = (254, 191, 1) #light brown
 blue_grey = (128, 128,150)
 width, height = 700, 600
 til_size = 20
@@ -54,8 +54,6 @@ class cells:
                             if check:
                                 if nPos not in self.position and nPos not in new_pos:
                                     new_pos.add(nPos)
-            case 2:
-                pass
         for x in new_pos: #Use a for loop to make it hashable  
             self.position.add(x)    
         return None
@@ -108,6 +106,7 @@ def getpos():
     row = y // til_size
     pos = (col, row)
     return pos
+
 def run():
     "This function run the simulation"
     #Vars
@@ -121,8 +120,7 @@ def run():
     trunk = cells(0)
     leaves = cells(1)
     trunk.position, leaves.position = set(), set() #Solves issue related to both trunk and leaves being placed at same time.
-    seed = cells(2) 
-    mouse_button = pygame.mouse.get_pressed()
+
     #position are the cells that are displayed
     
     while running:
@@ -133,7 +131,6 @@ def run():
             count += 1
              
         if count >= up_frecuency: #controls update time
-            
             if len(trunk.position) > 0 and leavespawn == 0:
                #Add leaves at the start on the first
                leaves.position = add_leaves(trunk.position)
